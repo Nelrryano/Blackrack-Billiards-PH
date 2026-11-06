@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lucky8 Billiards</title>
+
+<link rel="icon" type="image/png" href="no-bg (1).png">
+<link rel="apple-touch-icon" href="no-bg (1).png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f6f2; --surface:#ffffff; --ink:#18221e; --muted:#566660; --line:#d9dfd8;
+  --baize:#0e5a45; --baize-deep:#0b0f0d; --rail:#5a2a1e; --chalk:#2f6fc0; --on-baize:#f2f6f3;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0d1512; --surface:#15201b; --ink:#eef3ef; --muted:#9fb1a9; --line:#2a3a33; --baize:#1b8a6a; --chalk:#7ab0f2; color-scheme:dark;}}
+:root[data-theme="dark"]{--bg:#0d1512; --surface:#15201b; --ink:#eef3ef; --muted:#9fb1a9; --line:#2a3a33; --baize:#1b8a6a; --chalk:#7ab0f2; color-scheme:dark;}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 Figtree,system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque",Figtree,sans-serif;line-height:1.1;margin:0}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+.logo{font:800 20px "Bricolage Grotesque",sans-serif;text-decoration:none}
+nav{display:flex;gap:18px;font-size:15px}
+nav a{text-decoration:none;color:var(--muted)}
+nav a:hover{color:var(--ink)}
+.btn{display:inline-block;background:var(--chalk);color:#fff;border:0;border-radius:6px;padding:12px 20px;font:700 16px Figtree,sans-serif;text-decoration:none;cursor:pointer;text-align:center}
+.btn.alt{background:transparent;color:var(--on-baize);box-shadow:inset 0 0 0 2px var(--on-baize)}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--line)}
+.btn:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--chalk);outline-offset:2px}
+.hero{background:var(--baize-deep);color:var(--on-baize);padding:44px 0 56px}
+.hero .wrap{display:grid;gap:32px;align-items:center}
+@media(min-width:820px){.hero .wrap{grid-template-columns:1fr 1.2fr}}
+.hero h1{font-size:clamp(36px,6vw,58px);font-weight:800}
+.hero p{max-width:46ch;color:#c4d3cc;margin:16px 0 24px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.hero img{width:100%;height:auto;display:block;border-radius:10px}
+.trust{background:var(--surface);border-bottom:1px solid var(--line)}
+.trust ul{list-style:none;margin:0;padding:18px 0;display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));font-size:15px;color:var(--muted)}
+.trust b{color:var(--ink)}
+section{padding:60px 0}
+section h2{font-size:clamp(28px,4vw,38px);margin-bottom:8px}
+.sub{color:var(--muted);max-width:60ch;margin:0 0 28px}
+h3.grp{font-size:24px;margin:34px 0 4px}
+h3.grp:first-of-type{margin-top:0}
+.gnote{color:var(--muted);margin:0 0 16px;font-size:15px}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:6px;overflow:hidden}
+.card .table-img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;border-radius:7px;background:var(--bg)}
+.card h4{font:800 22px "Bricolage Grotesque",sans-serif;margin:0}
+.card .tag{color:var(--muted);font-size:14px;min-height:1.4em}
+.price{font:800 28px "Bricolage Grotesque",sans-serif;margin-top:auto;padding-top:10px}
+.card .btn{padding:10px;margin-top:8px}
+.band{background:var(--surface);border-block:1px solid var(--line)}
+.cols{display:grid;gap:32px}
+@media(min-width:820px){.cols{grid-template-columns:1fr 1fr}.cols.three{grid-template-columns:repeat(3,1fr)}}
+.box{border-left:4px solid var(--rail);padding-left:16px}
+.box h3{font-size:20px;margin-bottom:8px}
+.box ul,.specs{margin:0;padding-left:18px;color:var(--muted);font-size:15px}
+.gallery{display:grid;gap:10px;grid-template-columns:repeat(2,1fr)}
+@media(min-width:820px){.gallery{grid-template-columns:repeat(4,1fr)}}
+.gallery img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:8px;display:block}
+form{display:grid;gap:14px}
+label{font-weight:700;font-size:15px;display:grid;gap:6px}
+input,select,textarea{font:inherit;padding:11px 12px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);width:100%}
+#note{min-height:1.4em;color:var(--baize);font-weight:700}
+.contact p{margin:0 0 10px}
+.contact .cta{margin-top:16px}
+footer{background:var(--baize-deep);color:#c4d3cc;padding:28px 0;font-size:15px}
+@media(max-width:640px){nav{display:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* PREMIUM BLACKROCK LOOK + SUBTLE MOTION */
+:root{
+  --bg:#090d0b; --surface:#111a15; --ink:#f4f1e8; --muted:#a7b2aa; --line:rgba(214,178,94,.20);
+  --baize:#0b684b; --baize-deep:#070b09; --rail:#c6a15a; --chalk:#c6a15a; --on-baize:#f7f4eb;
+  color-scheme:dark;
+}
+body{background:radial-gradient(ellipse at 50% -20%,#1a3024 0%,#090d0b 55%);}
+header{background:rgba(7,11,9,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(198,161,90,.24)}
+header .wrap{height:76px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;min-width:0}
+.brand img{width:43px;height:43px;object-fit:contain;display:block;filter:drop-shadow(0 0 12px rgba(198,161,90,.18))}
+.brand-name{font:800 19px/1.05 "Bricolage Grotesque",sans-serif;letter-spacing:.02em;color:#f5f0e4;white-space:nowrap}
+.brand-name span{color:#d3b16d}
+nav{gap:24px;font-size:14px;letter-spacing:.02em}
+nav a{transition:color .25s ease}
+nav a:hover{color:#e1bf79}
+.btn{background:linear-gradient(135deg,#d7b875,#a9823e);color:#10130f;border-radius:999px;padding:12px 22px;box-shadow:0 7px 24px rgba(198,161,90,.13);transition:transform .25s ease,box-shadow .25s ease,filter .25s ease}
+.btn:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(198,161,90,.24);filter:brightness(1.06)}
+.btn.alt{color:#f4f1e8;box-shadow:inset 0 0 0 1px rgba(244,241,232,.55);background:rgba(255,255,255,.035)}
+.btn.ghost{color:#e7d5ad;box-shadow:inset 0 0 0 1px rgba(198,161,90,.45)}
+.hero{position:relative;overflow:hidden;padding:76px 0 82px;background:radial-gradient(ellipse at 80% 40%,rgba(17,93,64,.42),transparent 48%),linear-gradient(120deg,#070b09,#0d1912 58%,#10140f);}
+.hero:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 35%,rgba(215,184,117,.055) 50%,transparent 65%);background-size:220% 100%;animation:heroSheen 12s ease-in-out infinite}
+.hero .wrap{position:relative;z-index:1;gap:48px}
+.hero h1{font-size:clamp(39px,6vw,68px);letter-spacing:-.035em;max-width:12ch}
+.hero h1:after{content:"";display:block;width:76px;height:3px;margin-top:22px;background:linear-gradient(90deg,#d7b875,transparent)}
+.hero p{color:#c3cec5;line-height:1.8;margin:22px 0 28px}
+.hero img{border:1px solid rgba(215,184,117,.28);border-radius:16px;box-shadow:0 28px 70px rgba(0,0,0,.42);transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.hero img:hover{transform:scale(1.018)}
+.trust{background:#0d1510;border-block:1px solid rgba(198,161,90,.16)}
+.trust ul{padding:22px 0;gap:16px}
+.trust li{padding-left:14px;border-left:2px solid #b99553}
+.trust b{color:#e7d5ad}
+section{padding:78px 0}
+section h2{letter-spacing:-.025em;font-size:clamp(30px,4vw,42px)}
+.sub{line-height:1.8}
+h3.grp{color:#e7d5ad;margin-top:42px}
+.grid{gap:20px}
+.card{background:linear-gradient(155deg,rgba(25,38,29,.98),rgba(13,20,16,.98));border:1px solid rgba(198,161,90,.18);border-radius:15px;padding:14px;box-shadow:0 12px 35px rgba(0,0,0,.15);transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease}
+.card:hover{transform:translateY(-7px);border-color:rgba(215,184,117,.55);box-shadow:0 22px 45px rgba(0,0,0,.3)}
+.card .table-img{border-radius:10px}
+.card h4{color:#f4f1e8}
+.price{color:#e3c17d}
+.band{background:linear-gradient(135deg,#101a14,#0c120e);border-block:1px solid rgba(198,161,90,.16)}
+.box{border-left-color:#c6a15a}
+.box h3{color:#e7d5ad}
+.gallery{gap:14px}
+.gallery img{border:1px solid rgba(198,161,90,.18);border-radius:12px;transition:transform .4s ease,filter .4s ease,box-shadow .4s ease}
+.gallery img:hover{transform:scale(1.035);filter:brightness(1.08);box-shadow:0 14px 30px rgba(0,0,0,.3)}
+input,select,textarea{background:#0b120e;border-color:rgba(198,161,90,.25);border-radius:9px}
+input:focus,select:focus,textarea:focus{border-color:#c6a15a}
+footer{border-top:1px solid rgba(198,161,90,.2);background:#060907}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .75s ease,transform .75s cubic-bezier(.2,.75,.25,1)}
+.reveal.is-visible{opacity:1;transform:translateY(0)}
+@keyframes heroSheen{0%,100%{background-position:100% 0}50%{background-position:0 0}}
+@media(max-width:700px){header .wrap{height:68px}.brand img{width:38px;height:38px}.brand-name{font-size:16px}.hero{padding:55px 0 60px}.hero .wrap{gap:28px}section{padding:58px 0}.hero h1{max-width:15ch}}
+@media(max-width:640px){nav{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+
+<style>
+/* CLICKABLE PRODUCT IMAGES */
+#groups .table-img {
+  cursor: zoom-in;
+  transition: transform .2s ease;
+}
+
+#groups .table-img:hover {
+  transform: scale(1.02);
+}
+
+/* FULL SCREEN IMAGE VIEWER */
+#tableImageViewer {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999999;
+  background: rgba(0, 0, 0, 0.96);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+#tableImageViewer.show {
+  display: flex;
+}
+
+#tableImageViewer img {
+  display: block;
+  max-width: 95vw;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+#tableImageViewer .viewer-close {
+  position: absolute;
+  top: 12px;
+  right: 22px;
+  color: white;
+  font-size: 45px;
+  line-height: 1;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 2;
+}
+
+#tableImageViewer .viewer-hint {
+  position: absolute;
+  bottom: 12px;
+  color: white;
+  font-size: 13px;
+}
+</style>
+
+<div id="tableImageViewer" aria-hidden="true">
+  <button type="button" class="viewer-close" aria-label="Close image">&times;</button>
+  <img id="tableFullImage" src="" alt="Billiard table full view">
+  <div class="viewer-hint">Click anywhere outside the image or press ESC to close</div>
+</div>
+
+<script>
+(function () {
+  const viewer = document.getElementById("tableImageViewer");
+  const fullImage = document.getElementById("tableFullImage");
+  const closeButton = viewer.querySelector(".viewer-close");
+
+  function openImage(img) {
+    fullImage.src = img.currentSrc || img.src;
+    fullImage.alt = img.alt || "Billiard table";
+    viewer.classList.add("show");
+    viewer.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeImage() {
+    viewer.classList.remove("show");
+    viewer.setAttribute("aria-hidden", "true");
+    fullImage.src = "";
+    document.body.style.overflow = "";
+  }
+
+  // Event delegation: works even though product cards are generated by JavaScript.
+  document.addEventListener("click", function (event) {
+    const img = event.target.closest("#groups .table-img");
+    if (img) {
+      event.preventDefault();
+      openImage(img);
+    }
+  });
+
+  closeButton.addEventListener("click", closeImage);
+
+  viewer.addEventListener("click", function (event) {
+    if (event.target === viewer) {
+      closeImage();
+    }
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && viewer.classList.contains("show")) {
+      closeImage();
+    }
+  });
+})();
+</script>
+
+
+</script>
+
+
+<header><div class="wrap">
+  <a class="brand" href="#top" aria-label="Blackrock Billiards home">
+    <!-- LOGO IMAGE: save your logo as images/logo.png -->
+    <img src="no-bg (1).png" alt="Blackrock Billiards logo">
+    <span class="brand-name">BLACKROCK <span>BILLIARDS</span></span>
+  </a>
+  <nav><a href="#tables">Prices</a><a href="#included">What’s included</a><a href="#gallery">Photos</a><a href="#contact">Contact</a></nav>
+  <a class="btn" href="#contact">Get a quote</a>
+</div></header>
+
+<main id="top">
+<div class="hero"><div class="wrap">
+  <div class="reveal">
+    <h1>Premium Billiard Tables in the Philippines </h1>
+    <p>Wood or marble flooring, from 36 × 63 inches up to full 5 × 9 feet. Every table comes with balls, cues, triangle, chalk and cue rack.</p>
+    <div class="cta"><a class="btn" href="#tables">See prices</a><a class="btn alt" href="#contact">Message us</a></div>
+  </div>
+  <img src="473270982_1385290725967780_8526943072086261728_n.jpg" alt="Brown 5 by 9 foot Maxima 8 style billiard table with green cloth and copper corners" width="1000" height="750" class="reveal">
+</div></div>
+
+<div class="trust"><div class="wrap"><ul>
+  <li><b>From ₱17,000</b> for a 36 × 63 inch table</li>
+  <li><b>Marble slate</b> on every marble flooring table</li>
+  <li><b>Japan Simonis cloth</b> and K66 US cushion rubber</li>
+  <li><b>Leg levelers</b> so the table sits flat</li>
+</ul></div></div>
+
+<section id="tables"><div class="wrap">
+  <h2>Sizes and prices</h2>
+  <p class="sub">All prices are in Philippine pesos. Flooring means the playing bed under the cloth. Message us for a shipping quote to your area.</p>
+  <div id="groups"></div>
+</div></section>
+
+<section class="band" id="included"><div class="wrap">
+  <h2>What’s included</h2>
+  <p class="sub">Accessories come with the table. Nothing extra to buy before you play.</p>
+  <div class="cols three">
+    <div class="box"><h3>36 × 63 and 42 × 74 inches</h3><ul><li>Set of balls</li><li>2 tako roscas</li><li>Center spot</li><li>Triangle</li><li>Tisa</li><li>Cue rack</li></ul></div>
+    <div class="box"><h3>4 × 8 feet</h3><ul><li>Set of balls</li><li>2 tako roscas</li><li>Center spot</li><li>Triangle</li><li>Tisa</li><li>Cue rack</li><li>Panargo</li><li>Tiririt</li></ul></div>
+    <div class="box"><h3>5 × 9 feet</h3><ul><li>2 tako deroscas</li><li>1 tako panargo</li><li>1 tiririt</li><li>1 set of tisa</li><li>Triangle</li><li>Set of balls</li><li>Center dot</li><li>Cue rack</li></ul></div>
+  </div>
+  <h3 class="grp" style="margin-top:40px">Build and materials</h3>
+  <ul class="specs">
+    <li>Kiln-dry hardwood or eco-for wood frame</li>
+    <li>Marble slate, Tereza made</li>
+    <li>Master banda K66 US cushion rubber</li>
+    <li>Japan Simonis tapete (cloth)</li>
+    <li>Hansinburg balls</li>
+    <li>Metal cornering and hard plastic pockets</li>
+    <li>Leg leveler</li>
+  </ul>
+</div></section>
+
+<section id="gallery">
+  <div class="wrap">
+
+    <h2>Tables we have delivered</h2>
+    <p class="sub">Photos from our recent jobs.</p>
+
+    <div class="gallery">
+
+      <div class="gallery-item">
+        <img src="table-42x74 (2).jpg" alt="42 by 74 billiard table" loading="lazy">
+        <div class="gallery-caption">
+          <h3>Quezon City</h3>
+          <p>42 × 74 Billiard Table</p>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="gallery-2 (2).jpg" alt="Brown billiard table with blue cloth" loading="lazy">
+        <div class="gallery-caption">
+          <h3>Meycauayan, Bulacan</h3>
+          <p>Marble Flooring Table</p>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="gallery-3 (2).jpg" alt="Billiard player taking a shot" loading="lazy">
+        <div class="gallery-caption">
+          <h3>General Santos City, South Cotabato</h3>
+          <p>Billiard Table Delivery</p>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="gallery-4 (2).jpg" alt="Customer beside billiard table" loading="lazy">
+        <div class="gallery-caption">
+          <h3>General Santos City, South Cotabato</h3>
+          <p>Original Maxima 8</p>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="gallery-5 (2).jpg" alt="Black and brown billiard table" loading="lazy">
+        <div class="gallery-caption">
+          <h3>Tacloban City, Leyte</h3>
+          <p>Original Maxima 7</p>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="gallery-6 (2).jpg" alt="Blue cloth billiard table" loading="lazy">
+        <div class="gallery-caption">
+          <h3>Puerto Princesa, Palawan</h3>
+          <p>Original Maxima 7+</p>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="gallery-7 (2).jpg" alt="Small billiard table" loading="lazy">
+        <div class="gallery-caption">
+          <h3>Laoag City, Ilocos Norte</h3>
+          <p>42 × 74 Marble Flooring</p>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="gallery-8 (2).jpg" alt="Customer beside delivered billiard table" loading="lazy">
+        <div class="gallery-caption">
+          <h3>Makati City, Metro Manila</h3>
+          <p>	42 × 74 Wood Flooring</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="band" id="contact"><div class="wrap cols">
+  <div class="contact">
+    <h2>Ask for a quote</h2>
+    <p class="sub">Tell us the size you want and where it should go. We will reply with the total price including shipping.</p>
+    <p><b>Viber:</b> +63 946 537 1546<br><b>Messenger:</b> zjeven.tejano.3<br><b>Email:</b> zjeven.02@gmail.com</p>
+    <div class="cta">
+      <a class="btn" href="https://m.me/zjeven.tejano.3" rel="noopener">Message on Messenger</a>
+      <a class="btn ghost" href="viber://chat?number=%2B639465371546">Chat on Viber</a>
+    </div>
+  </div>
+  <form id="f">
+    <label>Your name<input name="name" required autocomplete="name"></label>
+    <label>Mobile number<input name="phone" required inputmode="tel" autocomplete="tel"></label>
+    <label>Table<select name="table" id="sel"></select></label>
+    <label>City or province<input name="city" required placeholder="e.g. Cebu City"></label>
+    <label>Notes<textarea name="msg" rows="3" placeholder="Room size, floor level, home or bar use"></textarea></label>
+    <button class="btn" type="submit">Send inquiry by email</button>
+    <div id="note" role="status"></div>
+  </form>
+</div></section>
+</main>
+
+<footer><div class="wrap">Blackrock Billiards. Prices may change; message us to confirm before ordering.</div></footer>
+
+<script>
+// Each table item now has: [name, price, note, image path].
+// Put your table photos inside the "images" folder using these filenames,
+// or change the image path here to match your own photo filenames.
+var G=[
+ {h:"Wood flooring",n:"Lower-priced tables for homes and small spaces.",i:[["36 × 63 inches",17000,"","{E56CCD62-D1D3-47D1-BF1E-30003F91EBA3}.png"],["42 × 74 inches",19000,"","{847ED0B2-FD07-40A3-93C8-C1771769193F}.png"],["4 × 8 feet",42000,"","{C6301972-AECD-4914-A01D-068C95134D14}.png"]]},
+ {h:"Marble flooring",n:"Marble slate for a flatter, steadier playing surface.",i:[["36 × 63 inches",32000,"","{D68CDB6D-EA92-4BEF-AA75-4FC0D9460C5E}.png"],["42 × 74 inches",35000,"","{75AEF7C7-35A7-4E22-9C39-F056AEBC1BA0}.png"],["4 × 8 feet",56000,"","{380198D5-169C-43D2-B22F-97A9038379B7}.png"],["5 × 9 feet, ordinary",68000,"","{9789E03A-26E2-4802-B929-BCA34D78650E}.png"],["5 × 9 feet, Maxima 7 copy",70000,"","{2EECEED4-CBA8-432C-9C20-4E028377AF12}.png"],["5 × 9 feet, Maxima 8 copy",73000,"","{35E56063-9F62-4BBF-9365-CD1E2631FE84}.png"]]},
+ {h:"Original Maxima",n:"Original branded tables.",i:[["Maxima 7",125000,"","{967E086F-6D0C-4C3A-BA9D-45C39571EE0F}.png"],["Maxima 7+",130000,"","{C54AE0E8-2158-4F3F-819C-4906DED39DF9}.png"],["Maxima 8",135000,"","{F2F5989A-B62C-40C0-A34E-68D2BAF59C3C}.png"]]}
+];
+var peso=function(n){return "₱"+n.toLocaleString("en-PH")};
+var out=document.getElementById("groups"),sel=document.getElementById("sel");
+G.forEach(function(g){
+  var html='<h3 class="grp">'+g.h+'</h3><p class="gnote">'+g.n+'</p><div class="grid">';
+  g.i.forEach(function(t){
+    var label=(g.h==="Original Maxima"?"":g.h+", ")+t[0];
+    var imagePath=t[3]||"images/table-placeholder.jpg";
+    var imageAlt=t[0]+" billiard table - "+g.h;
+    html+='<div class="card"><img class="table-img" src="'+imagePath+'" alt="'+imageAlt+'" loading="lazy"><h4>'+t[0]+'</h4><div class="tag">'+(t[2]||"&nbsp;")+'</div><div class="price">'+peso(t[1])+'</div><a class="btn" href="#contact" data-t="'+label+' ('+peso(t[1])+')">Ask about this table</a></div>';
+    sel.insertAdjacentHTML("beforeend",'<option>'+label+' ('+peso(t[1])+')</option>');
+  });
+  out.insertAdjacentHTML("beforeend",html+'</div>');
+});
+out.addEventListener("click",function(e){var a=e.target.closest("[data-t]");if(a)sel.value=a.dataset.t});
+
+// Gentle reveal motion as sections and product cards enter the screen.
+document.querySelectorAll("section .wrap, .trust li, .card, .gallery img, .box").forEach(function(el){el.classList.add("reveal")});
+if("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+  var revealObserver=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add("is-visible");revealObserver.unobserve(entry.target)}})},{threshold:0.12});
+  document.querySelectorAll(".reveal").forEach(function(el){revealObserver.observe(el)});
+}else{document.querySelectorAll(".reveal").forEach(function(el){el.classList.add("is-visible")})}
+
+document.getElementById("f").addEventListener("submit",function(e){
+  e.preventDefault();var d=new FormData(e.target);
+  var body="Name: "+d.get("name")+"\nMobile: "+d.get("phone")+"\nTable: "+d.get("table")+"\nLocation: "+d.get("city")+"\nNotes: "+d.get("msg");
+  document.getElementById("note").textContent="Opening your email app. Thank you, "+d.get("name")+".";
+  location.href="mailto:zjeven.02@gmail.com?subject="+encodeURIComponent("Quote request: "+d.get("table"))+"&body="+encodeURIComponent(body);
+});
+</script>
+</body>
+</html>
